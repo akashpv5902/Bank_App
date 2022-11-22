@@ -28,11 +28,13 @@ html---->view
 
     ts->html or html ->ts
 
-    a.1)component to view
+    a.1)component to view(ts->html)
 
         i)string interpolation (1 direction)-{{expression}}
         ii)property binding -[attribute name]="property"
 
-    a.2)view to components
+    a.2)view to components(html->ts)
 
-        i)event binding(1 direction )-(event_name)="function_name    
+        i)event binding(1 direction )-(event_name)="function_name()";
+        ii)Event binding using $event (event_name)="function_name($event)"
+        iii)Event binding using template referencing variale - #variable_name 
