@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +17,9 @@ export class LoginComponent implements OnInit {//3rd execution
 //properties/variables
 //userdefined methods(4th execution          )
 
-userDetails:any={
-  1000:{acno:1000,username:'sanil',password:1000,balance:1000},
-  1001:{acno:1001,username:'akhil',password:1001,balance:1000},
-  1002:{acno:1002,username:'arvind',password:1002,balance:1000}
-}
 
-  constructor() {  //first execution
+//dependency injection
+  constructor(private ds:DataService,private router:Router) {  //first execution
   // it automatically invoke when object is created
   }
 
@@ -43,16 +41,37 @@ userDetails:any={
       console.log(this.pswd);
       
      }
-     login(a:any,p:any){
+    //  login(a:any,p:any){
+    //   // alert('login clicked')
+    //   var acno=a.value;
+    //   var pswd=p.value;
+    //   var userDetails=this.userDetails;
+
+    //   if(acno in userDetails){
+    //     if(pswd==userDetails[acno]['password'])
+    //     {
+    //         alert('login successfull')
+    //     }
+    //     else{
+    //       alert('invalid password')
+    //     }
+    //   }
+    //   else{
+    //     alert('invalid user datails')
+    //   }
+    // }
+    login(){
       // alert('login clicked')
-      var acno=a.value;
-      var pswd=p.value;
-      var userDetails=this.userDetails;
+      var acno=this.acno;
+      var pswd=this.pswd;
+      var userDetails=this.ds.userDetails;
 
       if(acno in userDetails){
         if(pswd==userDetails[acno]['password'])
+    
         {
             alert('login successfull')
+            this.router.navigateByUrl('dashboard')
         }
         else{
           alert('invalid password')

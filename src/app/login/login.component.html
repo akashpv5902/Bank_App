@@ -8,14 +8,15 @@
     </div>
     <form class="p-3 mt-3">
         <div class="form-field d-flex align-items-center">
-            <input #acno type="text" name="acno" id="login_acno" placeholder="Account number">
+            <input [(ngModel)]="acno" type="text" name="acno" id="login_acno" placeholder="Account number">
         </div>
         <div class="form-field d-flex align-items-center">
-            <input #pswd type="password" name="password" id="login_pswd" placeholder="Password">
+            <input [(ngModel)]="pswd" type="password" name="password" id="login_pswd" placeholder="Password">
         </div>
-        <button class="btn mt-3" (click)="login(acno,pswd)" type="button" >Login</button>
+        <button class="btn mt-3" (click)="login()" type="button" >Login</button>
     </form>
     <div class="text-center fs-5 mt-3">
-        <a href="#">Forget password?</a> or <a href="./signup.html">Sign up</a>
+        <a href="#">Forget password?</a> or <a routerLink="register">Sign up</a>
     </div>
 </div>
+<router-outlet></router-outlet>

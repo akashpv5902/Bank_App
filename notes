@@ -37,4 +37,46 @@ html---->view
 
         i)event binding(1 direction )-(event_name)="function_name()";
         ii)Event binding using $event (event_name)="function_name($event)"
-        iii)Event binding using template referencing variale - #variable_name 
+        iii)Event binding using template referencing variale - #variable_name
+
+
+
+    b)Two way data binding (Two -direction )- ts->html,html ->ts
+
+        i)ngModel -formsModule in app.module.ts
+         syntax->[(ngModel)]="property_name" 
+
+
+2)Angular Routing
+   
+   -To set a path for component
+
+   syntax->
+   {
+    path:"value",component:class_name
+   }
+
+   eg:
+   login
+   
+
+   {
+    path:'',component:LoginComponent
+   },
+
+
+
+
+   3 Dependency Injection
+
+   to share data between two depended classes
+
+   constructor(private)
+
+   eg:router class -navigateByUrl is used to navigate the component
+
+
+   4. Angular services
+
+   to hold redundant data
+   ng g s service_name
