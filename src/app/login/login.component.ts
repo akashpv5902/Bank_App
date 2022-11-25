@@ -64,21 +64,31 @@ export class LoginComponent implements OnInit {//3rd execution
       // alert('login clicked')
       var acno=this.acno;
       var pswd=this.pswd;
+
       var userDetails=this.ds.userDetails;
 
-      if(acno in userDetails){
-        if(pswd==userDetails[acno]['password'])
-    
-        {
-            alert('login successfull')
-            this.router.navigateByUrl('dashboard')
-        }
-        else{
-          alert('invalid password')
-        }
+      const result=this.ds.login(acno,pswd)
+      if(result){
+alert('login successful');
+this.router.navigateByUrl('dashboard')
       }
       else{
-        alert('invalid user datails')
+        alert('login failed')
       }
+
+      // if(acno in userDetails){
+      //   if(pswd==userDetails[acno]['password'])
+    
+      //   {
+      //       alert('login successfull')
+      //       this.router.navigateByUrl('dashboard')
+      //   }
+      //   else{
+      //     alert('invalid password')
+      //   }
+      // }
+      // else{
+      //   alert('invalid user datails')
+      // }
     }
 }
