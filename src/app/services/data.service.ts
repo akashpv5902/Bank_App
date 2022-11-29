@@ -5,12 +5,18 @@ import { ArgumentOutOfRangeError } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
+  //current user
+
+  currentUser="";
+
+  //current acno
+  currentAcno="";
 
   constructor() { }
   userDetails:any={
-    1000:{acno:1000,username:'sanil',password:1000,balance:1000},
-    1001:{acno:1001,username:'akhil',password:1001,balance:1000},
-    1002:{acno:1002,username:'arvind',password:1002,balance:1000}
+    1000:{acno:1000,username:'sanil',password:1000,balance:1000,transaction:[]},
+    1001:{acno:1001,username:'akhil',password:1001,balance:1000,ransaction:[]},
+    1002:{acno:1002,username:'arvind',password:1002,balance:1000,ransaction:[]}
   }
   register(acno:any,username:any,password:any){
     let userDetails=this.userDetails
@@ -35,6 +41,8 @@ export class DataService {
     let userDetails=this.userDetails
     if(acno in userDetails){
       if(pswd==userDetails[acno]['password']){
+        this.currentUser=userDetails[acno]['username']
+        this.currentAcno=acno;
         return true;
       }
       else{
@@ -53,6 +61,12 @@ deposit(acno:any,pswd:any,amt:any){
   if(acno in userDetails){
     if(pswd==userDetails[acno]['password']){
       userDetails[acno]['balance'] += amount;
+      userDetails[acno]['transaction'].push({
+        type:'Credit',
+        amount:amount
+      })
+      console.log(userDetails);
+      
       return userDetails[acno]['balance']
     }
     else{
@@ -72,6 +86,10 @@ withdraw(acno:any,pswd:any,amt:any){
     if(pswd==userDetails[acno]['password']){
       if(userDetails[acno]['balance']>=amount){
         userDetails[acno]['balance'] -=amount;
+        userDetails[acno]['transaction'].push({
+          type:'Debit',
+          Amount:amount
+        })
         return userDetails[acno]['balance']
       }
       else{
@@ -84,5 +102,8 @@ withdraw(acno:any,pswd:any,amt:any){
       return false;
     }
   }
+}
+getTransaction(acno:any){
+  return this.userDetails[acno]['transaction']
 }
 }

@@ -80,3 +80,19 @@ html---->view
 
    to hold redundant data
    ng g s service_name
+
+
+   5 angular directives -to manipulate DOM
+
+   a)component directives
+   b)structural directives  
+                1) *ngFor
+
+6 Angular forms
+
+a)template driven Forms(first design html page and cant do validation)
+b)Model Driven Forms(First design model in ts file, easy validation methods)
+        -Advanced validation
+        1)Reactive forms
+        form group,array,control
+        we can add validation via importing reactive form modeule 

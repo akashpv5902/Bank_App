@@ -5,15 +5,15 @@
     <div class="text-center mt-4 name">
         My Bank
     </div>
-    <form class="p-3 mt-3">
+    <form [formGroup]="registerForm" class="p-3 mt-3">
         <div class="form-field d-flex align-items-center">
-            <input  [(ngModel)]="uname"  type="text" name="userName" id="reg_name" placeholder="Username">
+            <input  formControlName="uname"  type="text" name="userName" id="reg_name" placeholder="Username">
         </div>
         <div class="form-field d-flex align-items-center">
-            <input [(ngModel)]="acno" type="text" name="Account number" id="reg_acno" placeholder="Account number">
+            <input formControlName="acno" type="text" name="Account number" id="reg_acno" placeholder="Account number">
         </div>
         <div class="form-field d-flex align-items-center">
-            <input [(ngModel)]="pswd" type="password" name="password" id="reg_pswd" placeholder="Password">
+            <input formControlName="pswd" type="password" name="password" id="reg_pswd" placeholder="Password">
         </div>
         <button class="btn mt-3" (click)="register()" type="button">Register</button>
     </form>
