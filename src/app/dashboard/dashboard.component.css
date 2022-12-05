@@ -1,4 +1,9 @@
 .child{
     display: inline-block;
     margin-left: 190px;
+
+
+}
+.style1{
+    opacity: 0;
 }

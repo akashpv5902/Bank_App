@@ -8,15 +8,12 @@ import { DataService } from '../services/data.service';
 })
 export class TransactionComponent implements OnInit {
 
-
-
-
 //to hold currentAcno
-acno:any
+  acno:any
 
+  //to hold array of transaction
+  transaction:any
 
-//to hold array of transaction
-transaction:any
   constructor(private ds:DataService) {
     this.acno=this.ds.currentAcno
     this.transaction=this.ds.getTransaction(this.acno)
@@ -24,7 +21,9 @@ transaction:any
     
    }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {
+  }
+
+
 
 }

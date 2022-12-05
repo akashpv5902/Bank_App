@@ -96,3 +96,19 @@ b)Model Driven Forms(First design model in ts file, easy validation methods)
         1)Reactive forms
         form group,array,control
         we can add validation via importing reactive form modeule 
+
+
+7)Local storage
+  -setItem - To store  data
+  -getItem - To retrieve data
+  -removeItem -To remove data
+
+
+8)parent child communication
+
+   parent -> child
+   child->parent
+
+eg:
+   Dashboard->parent
+   delete->child
