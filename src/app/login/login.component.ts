@@ -76,29 +76,25 @@ export class LoginComponent implements OnInit {//3rd execution
     // alert('login clicked')
     var acno = this.loginForm.value.acno;
     var pswd = this.loginForm.value.pswd;
-    var userDetails = this.ds.userDetails;
+    // var userDetails = this.ds.userDetails;
 
     if (this.loginForm.valid) {
-      const result = this.ds.login(acno, pswd)
+    this.ds.login(acno, pswd)
+    .subscribe((result:any)=>{
+     
+      alert(result.message);
+      this.router.navigateByUrl('dashboard')
 
-
-      if (result) {
-        alert('login successful');
-        this.router.navigateByUrl('dashboard')
-      }
-      else {
-        alert('login failed')
-        this.router.navigateByUrl('login')
-      }
+         
+    },
+    result=>{
+      alert(result.error.message)
     }
-
-    else {
-      alert('invalid form')
+    )
 
 
 
-    }
   }
 
-  
+} 
 }

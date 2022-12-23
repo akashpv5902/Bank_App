@@ -44,10 +44,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!localStorage.getItem('currentAcno')){
-      alert('please login first')
-      this.router.navigateByUrl('');
-    }
+    // if(!localStorage.getItem('currentAcno')){
+    //   alert('please login first')
+    //   this.router.navigateByUrl('');
+    // }
   }
   deposit(){
 var acno=this.depositForm.value.acno;

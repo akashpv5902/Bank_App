@@ -15,50 +15,53 @@ export class RegisterComponent implements OnInit {
   acno="";
   pswd="";
   uname="";
-//register model
-  registerForm=this.fb.group({ //group
-    uname:['',[Validators.required,Validators.pattern('[a-zA-z]*')]],  //array
+
+  //register model
+  registerForm=this.fb.group({//group
+    uname:['',[Validators.required,Validators.pattern('[a-zA-z]*')]],//array
     acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
-    pswd:['',[Validators.required,Validators.pattern('[0-9a-zA-Z]*')]]
+    pswd:['',[Validators.required,Validators.pattern('[0-9a-zA-z]*')]]
+})
 
-
-  })
-  //control -ts file model link to html file
-
+//control- ts file model link to html file
+     
   constructor(private router:Router,private ds:DataService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
 
   register(){
-    console.log(this.registerForm);
-    
-    
     // alert('clicked')
+    console.log(this.registerForm);
+
+    
+    
     var username=this.registerForm.value.uname;
     var password=this.registerForm.value.pswd;
     var acno=this.registerForm.value.acno;
 
-    if(this.registerForm.valid){
-      console.log(this.registerForm.get('uname')?.errors);
+    if(this.registerForm.valid)
+    {
+      // console.log(this.registerForm.get('uname')?.errors);
       
-      
-      const result=this.ds.register(acno,username,password)
-    if(result){
-      alert('register succesfull')
-      this.router.navigateByUrl('')
-    }
-    else{
-      alert('register failed')
-      this.router.navigateByUrl('')
-    }
+      this.ds.register(acno,username,password)
+      .subscribe((result:any)=>{
+        alert(result.message);
+        this.router.navigateByUrl('')
+      })
 
-    }else{
-      alert('invalid form')
-    }
-
+    // if(result){
+    //   alert('register succesfull')
+    //   this.router.navigateByUrl('')
+    // }
+    // else{
+    //   alert('register failed')
+    //   this.router.navigateByUrl('register')
+    // }
+    // }
+    }else
+   {
+     alert('inavlid form')
+   }
     
-  }
-
-}
-
+  }}
