@@ -81,6 +81,10 @@ export class LoginComponent implements OnInit {//3rd execution
     if (this.loginForm.valid) {
     this.ds.login(acno, pswd)
     .subscribe((result:any)=>{
+
+      localStorage.setItem('currentUser',JSON.stringify(result.currentUser));
+      localStorage.setItem('currentAcno',JSON.stringify(result.currentAcno));
+      localStorage.setItem('token',JSON.stringify(result.token));
      
       alert(result.message);
       this.router.navigateByUrl('dashboard')

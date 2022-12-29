@@ -1,6 +1,6 @@
-<button class="btn btn-warning" style="float:right  ;" (click)="logout()">Logout</button>
+<button class="btn btn-success" style="float:right  ;" (click)="logout()">Logout</button>
 
-<button class="btn btn-warning" style="float:right   ;" (click)="delete()">Delete</button>
+<button class="btn btn-danger" style="float:right   ;" (click)="delete()">Delete</button>
 
 
 
@@ -14,7 +14,7 @@
     </div>
 
     <!-- child component -->
-    <app-delete [item]="acno" (onCancel)="onCancel()"></app-delete>
+    <app-delete [item]="acno" (onCancel)="onCancel()" (onDelete)="onDelete($event)"></app-delete>
 
     <div class="child" [ngClass]="acno? 'style1':'' ">
         <div class="wrapper">

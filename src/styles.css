@@ -11,7 +11,9 @@
 }
 
 body {
-    background: #ecf0f3;
+    background-image: url(https://i.postimg.cc/mg1Nc5p0/R.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .wrapper {

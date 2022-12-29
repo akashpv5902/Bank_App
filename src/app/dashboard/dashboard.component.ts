@@ -38,16 +38,21 @@ export class DashboardComponent implements OnInit {
   })
    
 
-  constructor(private ds:DataService,private fb:FormBuilder,private router:Router) { 
-    this.user=this.ds.currentUser;
+  constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
+    if(localStorage.getItem('currentUser')) {
+    this.user=JSON.parse(localStorage.getItem('currentUser')||'');
+    }
     this.sdate=new Date;
   }
 
   ngOnInit(): void {
-    // if(!localStorage.getItem('currentAcno')){
-    //   alert('please login first')
-    //   this.router.navigateByUrl('');
-    // }
+    if(!localStorage.getItem('currentUser')){
+      alert('please login first')
+      this.router.navigateByUrl('');
+    }
+    this.user=JSON.parse(localStorage.getItem('currentUser')||'')
+    console.log(this.user);
+    
   }
   deposit(){
 var acno=this.depositForm.value.acno;
@@ -56,18 +61,29 @@ var amount=this.depositForm.value.amount;
 
 if(this.depositForm.valid){
 
-const result=this.ds.deposit(acno,pswd,amount)
-if(result){
-  alert(`${amount} is credited...Availble balance is ${result}`)
-}
-else{
-  alert('transaction error')
-}
-}
-else{
-  alert('deposit failed')
+this.ds.deposit(acno,pswd,amount)
+.subscribe((result:any)=>{
+  alert(result.message)
+},
+result=>{
+  alert(result.error.message)
+})
+
 }
   }
+
+
+// if(result){
+//   alert(`${amount} is credited...Availble balance is ${result}`)
+// }
+// else{
+//   alert('transaction error')
+// }
+// }
+// else{
+//   alert('deposit failed')
+// }
+//   }
 
   withdraw(){
     // alert('withdraw clicked')
@@ -78,24 +94,34 @@ else{
    if(this.withdrawForm.valid){
 
     const result=this.ds.withdraw(acno,pswd,amount)
-    if(result){
-      alert(`${amount} is debited ..available balance is ${result}`)
+    .subscribe((result:any)=>{
+      alert(result.message)
+    },
+    result=>{
+      alert(result.error.message)
+
+    })
+  }}
+//     if(result){
+//       alert(`${amount} is debited ..available balance is ${result}`)
     
-    }
-    else{
-      alert('transaction error')
-    }
-  }
-  else{
-    alert('withdrawal failed')
-  }
-}
+//     }
+//     else{
+//       alert('transaction error')
+//     }
+//   }
+//   else{
+//     alert('withdrawal failed')
+//   }
+// }
+   
 
 logout(){
   //remove user name and acno
 
   localStorage.removeItem('currentAcno')
   localStorage.removeItem('currentUser')
+  localStorage.removeItem('token')
   this.router.navigateByUrl('')
 }
 
@@ -105,5 +131,19 @@ delete() {
 }
 onCancel(){
   this.acno="";
+}
+onDelete(event:any){
+  // alert(event)
+
+  this.ds.deleteAcc(event)
+  .subscribe((result:any)=>{
+    alert(result.message)
+    // this.router.navigateByUrl('');
+    this.logout();
+  },
+  result=>{
+    alert(result.error.message)
+  })
+  
 }
 }

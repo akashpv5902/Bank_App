@@ -1,6 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaderResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ArgumentOutOfRangeError } from 'rxjs';
+
+// global http header object
+const options = {
+  headers: new HttpHeaders()
+}
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +22,7 @@ export class DataService {
 
 
   constructor(private http:HttpClient) {
-    this.getDetails();
+    // this.getDetails();
     
     
    }
@@ -39,22 +44,22 @@ export class DataService {
     }
   }
 
-  getDetails()
-  {
-    if(this.userDetails)
-    {
-      this.userDetails=JSON.parse(localStorage.getItem('Database')|| '')
-    }
-    if(this.currentAcno)
-    {
-      this.currentAcno=JSON.parse(localStorage.getItem('currentAcno') || '')
-    }
-    if(this.currentUser)
-    {
-      this.currentUser=JSON.parse(localStorage.getItem('currentUser')|| '')
-    }
+  // getDetails()
+  // {
+  //   if(this.userDetails)
+  //   {
+  //     this.userDetails=JSON.parse(localStorage.getItem('Database')|| '')
+  //   }
+  //   if(this.currentAcno)
+  //   {
+  //     this.currentAcno=JSON.parse(localStorage.getItem('currentAcno') || '')
+  //   }
+  //   if(this.currentUser)
+  //   {
+  //     this.currentUser=JSON.parse(localStorage.getItem('currentUser')|| '')
+  //   }
 
-  }
+  // }
 
   //database
   userDetails:any={
@@ -122,76 +127,124 @@ export class DataService {
     // else{
     //   return false;
     // }
+
+    
+  }
+
+  getToken(){
+    // fetch token from localstorage
+    const token=JSON.parse(localStorage.getItem('token')||'');
+    // append token inside the header
+    // let headers=new HttpHeaders(); 
+
+    let headers = new HttpHeaders()
+
+    if(token){
+      options.headers=headers.append('x-access-token',token)
+    }
+    return options//to get token
+
+
   }
 
 deposit(acno:any,pswd:any,amt:any){
-  let userDetails=this.userDetails
-  var amount=parseInt(amt)
-  if(acno in userDetails){
-    if(pswd==userDetails[acno]['password']){
-      userDetails[acno]['balance'] += amount;
-      userDetails[acno]['transaction'].push({
-        Type:'credit',
-        Amount:amount
-      }) 
-      console.log(userDetails);
-      this.saveDetails();
+
+  const data={
+    acno,
+    pswd,
+    amount:amt,
+  }
+
+  return this.http.post('http://localhost:3000/deposit',data,this.getToken())
+
+  // let userDetails=this.userDetails
+  // var amount=parseInt(amt)
+  // if(acno in userDetails){
+  //   if(pswd==userDetails[acno]['password']){
+  //     userDetails[acno]['balance'] += amount;
+  //     userDetails[acno]['transaction'].push({
+  //       Type:'credit',
+  //       Amount:amount
+  //     }) 
+  //     console.log(userDetails);
+  //     this.saveDetails();
 
           
-       return userDetails[acno]['balance']
-    }
-    else{
-      alert('password incorrect')
-      return false;
-    }
-  }
-  else{
-    alert('invalid userdetails')
-    return false;
-  }
+  //      return userDetails[acno]['balance']
+  //   }
+  //   else{
+  //     alert('password incorrect')
+  //     return false;
+  //   }
+  // }
+  // else{
+  //   alert('invalid userdetails')
+  //   return false;
+  // }
 }
 
 withdraw(acno:any,pswd:any,amt:any)
 {
-  let userDetails=this.userDetails;
-  var amount=parseInt(amt)
-  if(acno in userDetails){
-    if(pswd==userDetails[acno]['password']){
-     if(userDetails[acno]['balance']>amount){
-      userDetails[acno]['balance'] -= amount;
-      userDetails[acno]['transaction'].push({
-        Type:'debit',
-        Amount:amount
-      }
-      )
-      console.log(userDetails);
-      this.saveDetails
+  const data ={
+    acno,
+    pswd,
+    amount:amt
+  }
+  return this.http.post('http://localhost:3000/withdraw',data,this.getToken())
+}
+// {
+//   let userDetails=this.userDetails;
+//   var amount=parseInt(amt)
+//   if(acno in userDetails){
+//     if(pswd==userDetails[acno]['password']){
+//      if(userDetails[acno]['balance']>amount){
+//       userDetails[acno]['balance'] -= amount;
+//       userDetails[acno]['transaction'].push({
+//         Type:'debit',
+//         Amount:amount
+//       }
+//       )
+//       console.log(userDetails);
+//       this.saveDetails
       
-      return userDetails[acno]['balance']
-    }
-    else{
-      alert('insufficient funds')
-      return false;
-    }
-}
-else
-{
-  alert('password incorrect')
-  return false;
+//       return userDetails[acno]['balance']
+//     }
+//     else{
+//       alert('insufficient funds')
+//       return false;
+//     }
+// }
+// else
+// {
+//   alert('password incorrect')
+//   return false;
 
-}
-}
-else{
-  alert('invalid userDetails')
-  return false;
+// }
+// }
+// else{
+//   alert('invalid userDetails')
+//   return false;
 
 
-}
-}
+// }
+// }
 
 getTransaction(acno:any){
 
-return this.userDetails[acno]['transaction']
+  const data={
+    acno
+  }
+
+return this.http.post('http://localhost:3000/transaction',data,this.getToken())
 
 }
+
+
+// delete
+
+ deleteAcc(acno:any){
+
+  
+return this.http.delete('http://localhost:3000/deleteAcc/'+acno)
+ }
 }

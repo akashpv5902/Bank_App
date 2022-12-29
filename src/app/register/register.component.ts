@@ -44,10 +44,13 @@ export class RegisterComponent implements OnInit {
     {
       // console.log(this.registerForm.get('uname')?.errors);
       
-      this.ds.register(acno,username,password)
+    this.ds.register(acno,username,password)
       .subscribe((result:any)=>{
         alert(result.message);
         this.router.navigateByUrl('')
+      },
+      result=>{
+        alert(result.error.message)
       })
 
     // if(result){
